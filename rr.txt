@@ -1,0 +1,70 @@
+import java.util.Scanner;
+public class Rr
+{
+    public static void main(String args[])
+    {
+        Scanner sn=new Scanner(System.in);
+        System.out.println("Process");
+        int n=sn.nextInt();
+        int process[]=new int[n];
+        int arrival[]=new int[n];
+        int burst[]=new int[n];
+        int completion[]=new int[n];
+        int oriburst[]=new int[n];
+        int tat[]=new int[n];
+        int wt[]=new int[n];
+        int temp,i,count,sum=0,tq;
+        float avgta=0,avgwt=0;
+        for(i=0;i<n;i++)
+        {
+            System.out.println("ENTERR PROCEES"+(i+1)+"ARRIVAL");
+            arrival[i]=sn.nextInt();
+            System.out.println("ENTER PROCESS"+(i+1)+"BURST");
+            burst[i]=sn.nextInt();
+            process[i]=i+1;
+            oriburst[i]=burst[i];
+        }
+        System.out.println("ENTER TIME");
+        tq=sn.nextInt();
+        while (true)
+        {
+            for(i=0,count=0;i<n;i++)
+            {
+                temp=tq;
+                if(burst[i]==0)
+                {
+                    count++;
+                    continue;
+                }
+                if(burst[i]>tq)
+                {
+                    burst[i]=burst[i]-tq;
+                }
+                else if(burst[i]>=0)
+                {
+                    temp=burst[i];
+                    burst[i]=0;
+                    count++;
+                }
+                sum=sum+temp;
+                completion[i]=sum;
+            }
+            if(n==count)
+            {
+                break;
+            }
+        }
+        System.out.print("ARRIVAL"+"\t");
+        for(i=0;i<n;i++)
+        {
+            tat[i]=completion[i]-arrival[i];
+            wt[i]=tat[i]-oriburst[i];
+            avgta+=tat[i];
+            avgwt+=wt[i];
+            System.out.println(arrival[i]+"\t"+oriburst[i]+"\t"+completion[i]+"\t"+tat[i]+"\t"+wt[i]);
+        }
+        System.out.print("tat"+(avgta/n)+"\t"+"wt"+(avgwt/n));
+    }
+}
+
+
